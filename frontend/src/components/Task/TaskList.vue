@@ -1,7 +1,8 @@
 <template>
     <div class="mt-5">
         <h2 class="text-center">Task List</h2>
-        <div class="table-responsive">
+        <Loading v-if="fetching"></Loading>
+        <div class="table-responsive" v-else>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -34,11 +35,16 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import Loading from '@/components/Loading'
 
 export default {
+    components: {
+        Loading,
+    },
     data(){
         return {
-            tasks: []
+            tasks: [],
+            fetching: true
         }
     },
     mounted(){
@@ -46,6 +52,7 @@ export default {
     },
     methods: {
         fetchTasks() {
+            this.fetching = true;
             axios.get(`/api/tasks`).then(response => {
                 let tasks = response.data;
                 // transform the tasks list
@@ -58,13 +65,14 @@ export default {
                     }
                     return task;
                 })
-            })
+            }).finally(() => {this.fetching = false})
         },
 
         deleteTask(task){
             if(window.confirm('Are you sure?')){
-            //    axios.delete('') 
-            console.log(task);
+                axios.delete(`/api/tasks/${task}`).then(response => {
+                    console.log(response);
+                }) 
             }
         }
     }
