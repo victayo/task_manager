@@ -50,10 +50,10 @@ export default {
     },
     methods: {
         addTask() {
-            axios.post('/api/tasks', this.newTask).then(response => {
-                let data = response.data;
+            axios.post('/api/tasks', this.newTask).then(() => {
+                // let data = response.data;
                 this.$emit('taskAdded', this.newTask);
-                console.log(data);
+                window.location.reload
             })
         }
     }

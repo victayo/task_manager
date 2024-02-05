@@ -70,8 +70,8 @@ export default {
 
         deleteTask(task){
             if(window.confirm('Are you sure?')){
-                axios.delete(`/api/tasks/${task}`).then(response => {
-                    console.log(response);
+                axios.delete(`/api/tasks/${task}`).then(() => {
+                    window.location.reload
                 }) 
             }
         }
