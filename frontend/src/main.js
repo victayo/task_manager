@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import mitt from 'mitt';
 import App from './App.vue';
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -29,11 +28,8 @@ if (!token) {
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 
-const emitter = mitt()
 
 const app = createApp(App);
-app.config.globalProperties.emitter = emitter
-
 
 app.use(router);
 app.mount('#app')

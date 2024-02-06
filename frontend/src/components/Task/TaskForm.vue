@@ -101,7 +101,7 @@ export default {
                 request = axios.post('/api/tasks', this.newTask);
             }
             request.then((response) => {
-                if(response.status == 200 || response.status == 204){
+                if(response.status == 200 || response.status == 201){
                     this.showSuccess = true;
                 }else{
                     this.showError = true;
