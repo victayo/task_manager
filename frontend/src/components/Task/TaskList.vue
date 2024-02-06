@@ -3,7 +3,7 @@
         <h2 class="text-center">Task List</h2>
         <Loading v-if="fetching"></Loading>
         <div class="table-responsive" v-else>
-            <table class="table table-bordered">
+            <table class="table table-bordered" v-if="tasks.length">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -28,6 +28,11 @@
                     </tr>
                 </tbody>
             </table>
+            <div v-else>
+                <div class="text-center mt-5 small">
+                    No tasks to display
+                </div>
+            </div>
         </div>
     </div>
 </template>
