@@ -56,9 +56,6 @@ export default {
         }
     },
     mounted(){
-        this.emitter.on("task-updated", () => {
-            this.fetchTasks();
-        });
         this.fetchTasks();
     },
     methods: {
@@ -88,9 +85,6 @@ export default {
                 }) 
             }
         }
-    },
-    beforeUnmount() {
-        this.emitter.off('task-updated');
     }
 };
 </script>

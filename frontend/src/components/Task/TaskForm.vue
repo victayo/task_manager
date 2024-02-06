@@ -2,6 +2,14 @@
     <div>
         <h4 v-if="task">Update Task</h4>
         <h4 v-else>Create Task</h4>
+        <div class="alert alert-success alert-dismissible fade show small" role="alert" v-if="showSuccess">
+            <strong>Task operation successful.</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hideAlert('success')"></button>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show small" role="alert" v-if="showError">
+            <strong>Task operation failed. Please try again</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hideAlert('error')"></button>
+        </div>
         <Loading v-if="fetching"></Loading>
         <form class="small" @submit.prevent="addTask" v-else>
             <div class="row">
@@ -31,7 +39,9 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary btn-sm" type="submit">Save Task</button>
+            <button class="btn btn-primary btn-sm" type="submit" :disabled="saving">
+                Save Task
+            </button>
         </form>
     </div>
 </template>
@@ -55,13 +65,13 @@ export default {
                 start_date: '',
                 end_date: ''
             },
-            fetching: false
+            fetching: false,
+            showSuccess: false,
+            showError: false,
+            saving: false
         };
     },
     mounted() {
-        this.emitter.on('edit-task', (task) => {
-            this.newTask = { ...task };
-        });
         if (this.task) {
             this.fetchTask();
         }
@@ -77,24 +87,37 @@ export default {
                 if (task.end_date) {
                     task.end_date = moment(task.end_date).format('yyyy-MM-DDThh:mm');
                 }
-                this.newTask = {...task};
+                this.newTask = { ...task };
             }).finally(() => this.fetching = false);
         },
         addTask() {
             let request;
+            this.saving = true;
+            this.showError = false;
+            this.showSuccess = false;
             if (this.newTask.id) {
                 request = axios.put(`/api/tasks/${this.newTask.id}`, this.newTask);
             } else {
                 request = axios.post('/api/tasks', this.newTask);
             }
             request.then((response) => {
-                console.log(response.status);
-                this.emitter.emit('task-updated', this.newTask);
-            });
+                if(response.status == 200 || response.status == 204){
+                    this.showSuccess = true;
+                }else{
+                    this.showError = true;
+                }
+            }).finally(() => this.saving = false);
+        },
+        hideAlert(type){
+            switch(type){
+                case 'success':
+                    this.showSuccess = false;
+                    break;
+                case 'error':
+                    this.showError = false;
+                    break;
+            }
         }
-    },
-    beforeUnmount() {
-        this.emitter.off('edit-task');
     }
 };
 </script>
