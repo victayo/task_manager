@@ -1,12 +1,12 @@
 <template>
     <div class="mt-1">
         <div class="d-flex justify-content-end">
-            <router-link class="btn btn-primary" to="/create">Create Task</router-link>
+            <router-link class="btn btn-primary btn-sm" to="/create">Create Task</router-link>
         </div>
         <h2 class="text-center">Task List</h2>
         <Loading v-if="fetching"></Loading>
         <div class="table-responsive" v-else>
-            <table class="table table-bordered" v-if="tasks.length">
+            <table class="table table-bordered small" v-if="tasks.length">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -24,8 +24,8 @@
                         <td>{{ task.display_end_date }}</td>
                         <td>
                             <div class="btn-group">
-                                <router-link class="btn btn-primary" :to="`/update/${task.id}`">Edit</router-link>
-                                <button class="btn btn-danger" @click="deleteTask(task.id)">Delete</button>
+                                <router-link class="btn btn-primary btn-sm" :to="`/update/${task.id}`">Edit</router-link>
+                                <button class="btn btn-danger btn-sm" @click="deleteTask(task.id)">Delete</button>
                             </div>
                         </td>
                     </tr>

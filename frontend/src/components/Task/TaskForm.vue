@@ -3,7 +3,7 @@
         <h4 v-if="task">Update Task</h4>
         <h4 v-else>Create Task</h4>
         <Loading v-if="fetching"></Loading>
-        <form @submit.prevent="addTask" v-else>
+        <form class="small" @submit.prevent="addTask" v-else>
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" type="submit">Save Task</button>
+            <button class="btn btn-primary btn-sm" type="submit">Save Task</button>
         </form>
     </div>
 </template>
