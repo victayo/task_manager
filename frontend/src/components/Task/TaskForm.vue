@@ -18,13 +18,13 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="start-date"  class="form-label">Start Date</label>
-                        <input type="date" class="form-control" id="start-date" v-model="newTask.start_date">
+                        <input type="datetime-local" class="form-control" id="start-date" v-model="newTask.start_date">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="end-date"  class="form-label">End Date</label>
-                        <input type="date" class="form-control" id="end-date" v-model="newTask.end_date">
+                        <input type="datetime-local" class="form-control" id="end-date" v-model="newTask.end_date">
                     </div>
                 </div>
             </div>
@@ -43,16 +43,14 @@ export default {
             newTask: {
                 title: '',
                 description: '',
-                startdate: '',
-                enddate: ''
+                start_date: '',
+                end_date: ''
             },
         };
     },
     mounted(){
         this.emitter.on('edit-task', (task) => {
-            console.log(task);
             this.newTask = {...task};
-            console.log(this.newTask);
         });
     },
     methods: {

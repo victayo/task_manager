@@ -17,8 +17,8 @@
                     <tr v-for="task in tasks" :key="task.id">
                         <td>{{ task.title }}</td>
                         <td>{{ task.description }}</td>
-                        <td>{{ task.start_date }}</td>
-                        <td>{{ task.end_date }}</td>
+                        <td>{{ task.display_start_date }}</td>
+                        <td>{{ task.display_end_date }}</td>
                         <td>
                             <div class="btn-group">
                                 <button class="btn btn-primary" @click="editTask(task)">Edit</button>
@@ -66,13 +66,16 @@ export default {
                 // transform the tasks list
                 this.tasks = tasks.map(task => {
                     if(task.start_date){ //format the date time using moment
-                        task.start_date = moment().format('YYYY-MM-DD hh:mm a');
+                        task.display_start_date = moment(task.start_date).format('YYYY-MM-DD hh:mm a');
+                        task.start_date = moment(task.start_date).format('yyyy-MM-DDThh:mm');
                     }
                     if(task.end_date){
-                        task.end_date = moment().format('YYYY-MM-DD hh:mm a');
+                        task.display_end_date = moment(task.end_date).format('YYYY-MM-DD hh:mm a');
+                        task.end_date = moment(task.end_date).format('yyyy-MM-DDThh:mm');
                     }
                     return task;
-                })
+                });
+                console.log(this.tasks);
             }).finally(() => {this.fetching = false})
         },
 
