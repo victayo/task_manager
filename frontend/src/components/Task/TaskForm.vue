@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h4>Create Task</h4>
+        <h4 v-if="newTask.id">Update Task</h4>
+        <h4 v-else>Create Task</h4>
         <form @submit.prevent="addTask">
             <div class="row">
                 <div class="col-md-6">
