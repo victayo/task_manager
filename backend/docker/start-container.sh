@@ -11,6 +11,8 @@ php artisan view:clear
 
 php artisan migrate
 
+php artisan db:seed
+
 
 exec docker-php-entrypoint "$@" &
 
