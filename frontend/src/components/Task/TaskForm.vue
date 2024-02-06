@@ -39,9 +39,15 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary btn-sm" type="submit" :disabled="saving">
-                Save Task
-            </button>
+            <div class="mt-3">
+                <button class="btn btn-primary btn-sm mx-1" type="submit" :disabled="saving">
+                    Save Task
+                </button>
+                <router-link class="btn btn-danger btn-sm" to="/">
+                    Cancel
+                </router-link>
+
+            </div>
         </form>
     </div>
 </template>
