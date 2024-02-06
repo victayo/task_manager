@@ -21,7 +21,7 @@
                         <td>{{ task.end_date }}</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-primary" @click="editTask(task)">Edit</button>
                                 <button class="btn btn-danger" @click="deleteTask(task.id)">Delete</button>
                             </div>
                         </td>
@@ -53,7 +53,7 @@ export default {
         }
     },
     mounted(){
-        this.emitter.on("task-added", () => {
+        this.emitter.on("task-updated", () => {
             this.fetchTasks();
         });
         this.fetchTasks();
@@ -76,6 +76,10 @@ export default {
             }).finally(() => {this.fetching = false})
         },
 
+        editTask(task){
+            this.emitter.emit('edit-task', task);
+        },
+
         deleteTask(task){
             if(window.confirm('Are you sure?')){
                 axios.delete(`/api/tasks/${task}`).then(() => {
@@ -83,6 +87,9 @@ export default {
                 }) 
             }
         }
+    },
+    beforeUnmount() {
+        this.emitter.off('task-updated');
     }
 };
 </script>

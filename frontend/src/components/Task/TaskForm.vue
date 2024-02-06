@@ -29,7 +29,7 @@
                 </div>
             </div>
             
-            <button class="btn btn-primary" type="submit">Add Task</button>
+            <button class="btn btn-primary" type="submit">Save Task</button>
         </form>
     </div>
 </template>
@@ -45,21 +45,32 @@ export default {
                 description: '',
                 startdate: '',
                 enddate: ''
-            }
+            },
         };
     },
     mounted(){
-        
+        this.emitter.on('edit-task', (task) => {
+            console.log(task);
+            this.newTask = {...task};
+            console.log(this.newTask);
+        });
     },
     methods: {
         addTask() {
-            axios.post('/api/tasks', this.newTask).then(() => {
-                this.emitter.emit('task-added', this.newTask);
-            })
+            let request;
+            if(this.newTask.id){
+                request = axios.put(`/api/tasks/${this.newTask.id}`, this.newTask);
+            }else{
+                request = axios.post('/api/tasks', this.newTask);
+            }
+            request.then((response) => {
+                console.log(response.status);
+                this.emitter.emit('task-updated', this.newTask);
+            });
         }
     },
     beforeUnmount() {
-        // removing eventBus listener
+        this.emitter.off('edit-task');
     }
 };
 </script>
