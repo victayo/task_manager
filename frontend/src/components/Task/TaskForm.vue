@@ -48,14 +48,18 @@ export default {
             }
         };
     },
+    mounted(){
+        
+    },
     methods: {
         addTask() {
             axios.post('/api/tasks', this.newTask).then(() => {
-                // let data = response.data;
-                this.$emit('taskAdded', this.newTask);
-                window.location.reload
+                this.emitter.emit('task-added', this.newTask);
             })
         }
+    },
+    beforeUnmount() {
+        // removing eventBus listener
     }
 };
 </script>

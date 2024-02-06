@@ -53,6 +53,9 @@ export default {
         }
     },
     mounted(){
+        this.emitter.on("task-added", () => {
+            this.fetchTasks();
+        });
         this.fetchTasks();
     },
     methods: {
