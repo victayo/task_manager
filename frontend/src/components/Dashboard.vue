@@ -1,13 +1,11 @@
 <template>
     <div class="row">
-        <task-form @addTask="handleAddTask" />
         <task-list />
     </div>
 </template>
   
 <script>
 import TaskList from './Task/TaskList.vue';
-import TaskForm from './Task/TaskForm.vue';
 
 export default {
     data() {
@@ -26,7 +24,6 @@ export default {
     },
     components: {
         TaskList,
-        TaskForm
     }
 };
 </script>

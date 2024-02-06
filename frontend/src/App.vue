@@ -20,10 +20,10 @@
           <div class="position-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+                <router-link class="nav-link active" aria-current="page" to="/">
                   <span data-feather="home"></span>
                   Tasks
-                </a>
+                </router-link>
               </li>
             </ul>
 
@@ -32,7 +32,8 @@
       </div>
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="bg-light p-5 rounded">
-          <dashboard />
+          <!-- <dashboard /> -->
+          <router-view></router-view>
         </div>
       </main>
     </div>
@@ -40,12 +41,12 @@
 </template>
 
 <script>
-import Dashboard from './components/Dashboard.vue';
+// import Dashboard from './components/Dashboard.vue';
 
 export default {
-  components: {
-    Dashboard
-  }
+  // components: {
+  //   Dashboard
+  // }
 };
 </script>
 
