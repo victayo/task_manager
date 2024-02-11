@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     data() {
         return {
@@ -37,15 +35,10 @@ export default {
     },
     methods: {
         login() {
-            axios.post('/api/login', {
+            this.$store.dispatch('authenticateCredentials',{
                 email: this.email,
                 password: this.password
-            }).then(resp => {
-                console.log(resp.data);
-                let token = resp.data.token;
-                localStorage.setItem("auth_token", token);
-                this.$store.commit('updateLoggedIn', true);
-            })
+            });
         }
     }
 }

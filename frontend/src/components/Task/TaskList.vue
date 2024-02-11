@@ -41,7 +41,7 @@
 </template>
   
 <script>
-import axios from 'axios';
+import axios from '@/axios';
 import moment from 'moment';
 import Loading from '@/components/Loading'
 
@@ -62,19 +62,26 @@ export default {
         fetchTasks() {
             this.fetching = true;
             axios.get(`/api/tasks`).then(response => {
-                let tasks = response.data;
-                // transform the tasks list
-                this.tasks = tasks.map(task => {
-                    if(task.start_date){ //format the date time using moment
-                        task.display_start_date = moment(task.start_date).format('YYYY-MM-DD hh:mm a');
-                        task.start_date = moment(task.start_date).format('yyyy-MM-DDThh:mm');
-                    }
-                    if(task.end_date){
-                        task.display_end_date = moment(task.end_date).format('YYYY-MM-DD hh:mm a');
-                        task.end_date = moment(task.end_date).format('yyyy-MM-DDThh:mm');
-                    }
-                    return task;
-                });
+                let status = response.status;
+                if(status == 200){
+                    let tasks = response.data;
+                    // transform the tasks list
+                    this.tasks = tasks.map(task => {
+                        if(task.start_date){ //format the date time using moment
+                            task.display_start_date = moment(task.start_date).format('YYYY-MM-DD hh:mm a');
+                            task.start_date = moment(task.start_date).format('yyyy-MM-DDThh:mm');
+                        }
+                        if(task.end_date){
+                            task.display_end_date = moment(task.end_date).format('YYYY-MM-DD hh:mm a');
+                            task.end_date = moment(task.end_date).format('yyyy-MM-DDThh:mm');
+                        }
+                        return task;
+                    });
+                }else{
+                    window.alert('unable to fetch data');
+                }
+            }).catch(err => {
+                console.log(err);
             }).finally(() => {this.fetching = false})
         },
 
