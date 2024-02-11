@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import TaskForm from '@/components/Task/TaskForm';
 import Dashboard from '@/components/Dashboard';
+import Login from '@/components/Login';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -8,20 +9,36 @@ const router = createRouter({
         {
             path: '/',
             name: 'dashboard',
-            component: Dashboard
+            component: Dashboard,
+            meta: { 
+                requiresAuth: true
+             }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login 
         },
         {
             path: '/create',
             name: 'create',
-            component: TaskForm
+            component: TaskForm,
+            meta: { 
+                requiresAuth: true
+             }
         },
         {
             path: '/update/:task',
             name: 'update',
             component: TaskForm,
-            props: true
+            props: true,
+            meta: { 
+                requiresAuth: true
+             }
         },
     ]
 });
 
-export default router;
+
+  
+  export default router;

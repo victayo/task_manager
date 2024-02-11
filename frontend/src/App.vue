@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Task Manager</a>
@@ -13,47 +12,57 @@
         </div>
       </div>
     </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
-          <div class="position-sticky pt-3">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <router-link class="nav-link active" aria-current="page" to="/">
-                  <span data-feather="home"></span>
-                  Tasks
-                </router-link>
-              </li>
-            </ul>
-
-          </div>
-        </nav>
-      </div>
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="bg-light p-5 rounded">
-          <!-- <dashboard /> -->
-          <router-view></router-view>
+    <div v-if="loggedIn">
+  
+      <div class="container-fluid">
+        <div class="row">
+          <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <router-link class="nav-link active" aria-current="page" to="/">
+                    <span data-feather="home"></span>
+                    Tasks
+                  </router-link>
+                </li>
+              </ul>
+  
+            </div>
+          </nav>
         </div>
-      </main>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="bg-light p-5 rounded">
+            <!-- <dashboard /> -->
+            <router-view></router-view>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div v-else>
+      <login></login>
     </div>
   </div>
 </template>
 
 <script>
-// import Dashboard from './components/Dashboard.vue';
+import login from '@/components/Login.vue'
 
 export default {
-  // components: {
-  //   Dashboard
-  // }
+  components: {
+    login
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    }
+  }
 };
 </script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
