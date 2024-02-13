@@ -7,9 +7,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    # volumes:
+    #     - './frontend:/app'
     networks:
       - taskmanager_net
-
   backend:
     container_name: taskmanager
     build:
