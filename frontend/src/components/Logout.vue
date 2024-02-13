@@ -5,12 +5,18 @@
 </template>
 
 <script>
+import axios from '@/axios';
+
 export default {
     methods: {
         logout() {
-            this.$store.dispatch('logout');
-            // Redirect to the home page
-            this.$router.push('/');
+            axios.post('/api/logout').then(response => {
+                if(response.status == 200){
+                    this.$store.dispatch('logout');
+                    // Redirect to the home page
+                    this.$router.push('/');
+                }
+            })
         }
     }
 }
